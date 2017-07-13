@@ -9,7 +9,7 @@ var stringMatch = function (str, pattern) {
 	var regex = new RegExp(escapeRegExp(pattern), 'i');
 
 	// if rule is regex string, remove slash character
-	var matches = pattern.match(/\/(.*?)\//i);
+	var matches = pattern.match(/^\/(.*?)\/$/i);
 	if ( matches !== null ) {
 		regex = new RegExp(matches[1], 'i');
 	}
