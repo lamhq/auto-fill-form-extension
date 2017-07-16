@@ -66,9 +66,10 @@ var inputMatchRule = function ($input, rule) {
 };
 
 var fillForm = function() {
-	$(fillFormSetting.supportedControls).each(function () {
+	var setting = window.fillFormSetting;
+	$(setting.supportedControls).each(function () {
 		var $input = $(this);
-		fillFormSetting.rules.forEach(function(rule) {
+		setting.rules.forEach(function(rule) {
 			if ( inputMatchRule($input, rule) ) {
 				setInputValue($input, rule.value);
 			}
@@ -77,23 +78,40 @@ var fillForm = function() {
 	console.log('form filled.');
 };
 
-$(document).on('keyup', function (e) {
-	// alt+a
-	if (e.altKey && e.which==65) {
-		fillForm();
-	}
+var loadSetting = function() {
+	chrome.storage.sync.get('setting', function(data) {
+		window.fillFormSetting = JSON.parse(data.setting);
+	});
+};
 
-	// alt+s
-	if (e.altKey && e.which==83) {
-		var $textarea = $('<textarea></textarea>').val(getSettingTemplate());
-		$textarea.prependTo($('body'));
-	}
-});
-
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		if( request.message === "fill_form" ) {
+var init = function() {
+	$(document).on('keyup', function (e) {
+		// alt+a
+		if (e.altKey && e.which==65) {
 			fillForm();
 		}
-	}
-);
+
+		// alt+s
+		if (e.altKey && e.which==83) {
+			var $textarea = $('<textarea></textarea>').val(getSettingTemplate());
+			$textarea.prependTo($('body'));
+		}
+	});
+
+	chrome.runtime.onMessage.addListener(
+		function(request, sender, sendResponse) {
+			if( request.message === "fill_form" ) {
+				fillForm();
+				return;
+			}
+			if( request.message === "refresh_setting" ) {
+				loadSetting();
+				return;
+			}
+		}
+	);
+
+	loadSetting();
+};
+
+init();

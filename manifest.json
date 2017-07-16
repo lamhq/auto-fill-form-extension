@@ -1,20 +1,24 @@
 {
   "manifest_version": 2,
 
-  "name": "Simple Auto Fill Form",
-  "description": "This extension fill form input automatically when page load",
+  "name": "Simple Auto Fill",
+  "description": "This extension fill form input automatically",
   "version": "1.0",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_title": "Press Alt+A to fill form"
   },
+  "permissions": [
+    "storage"
+  ],
+  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
-      "js": ["jquery.min.js", "setting.js", "content.js"]
+      "js": ["lib/jquery.min.js", "content.js"]
     }
   ],
   "background": {

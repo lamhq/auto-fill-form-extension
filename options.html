@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<title>Simple Auto Fill Settings</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body ng-controller="DefaultController">
+<div class="container-fluid">
+	<div class="clearfix">
+		<p class="pull-left">
+			<button ng-click="addRule()" type="button" class="btn btn-primary" title="Add rule">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-danger" title="Remove selected rules">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-warning" title="Edit selected rules">
+				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+			</button>
+		</p>
+		<p class="pull-right">
+			<button ng-click="saveSetting()" type="button" class="btn btn-success" title="Save changes">
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+			</button>
+			<button ng-click="loadSetting()" type="button" class="btn btn-default" title="Reset">
+				<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+			</button>
+		</p>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th><input type="checkbox" ng-click="toggleSelect($event)" /></th>
+					<th><a href="#" title="Click to sort">Site Rule</a></th>
+					<th><a href="#" title="Click to sort">Field Rule</a></th>
+					<th><a href="#" title="Click to sort">Value</a></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td><input type="text" class="form-control" placeholder="Enter text to filter..." /></td>
+					<td><input type="text" class="form-control" placeholder="Enter text to filter..." /></td>
+					<td><input type="text" class="form-control" placeholder="Enter text to filter..." /></td>
+					<td></td>
+				</tr>
+				<tr ng-repeat="rule in rules track by $index">
+					<td>
+						<input type="checkbox" ng-model="rule.selected"/>
+					</td>
+					<td>
+						<input type="text" ng-model="rule.siteRule" class="form-control" />
+					</td>
+					<td>
+						<input type="text" ng-model="rule.fieldRule" class="form-control" />
+					</td>
+					<td>
+						<input type="text" ng-model="rule.value" class="form-control" />
+					</td>
+					<td>
+						<button type="button" ng-click="deleteRule(rule)" class="btn btn-danger" title="Remove"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+	<script src="lib/jquery.min.js"></script>
+	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="lib/angular.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>

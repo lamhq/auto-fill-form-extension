@@ -1,14 +1,11 @@
-// add content script
-// use jquery in content script
-// fill form field in content script
-// register hot key alt + a to fill data
-register hot key alt+s
-generate json field config when alt+s
-show textarea to page and display json
-
-edit json field config, add value
-define variable json to extension
-decode this json field config to objects
-
-fill form when alt+a
-
+// content script: load setting from chrome storage
+// remove setting.js
+after saving setting in option page, update content script local setting
+change stringMatch: detect regex by regex:.*?
+filter rules
+alt+s: add form fields to rule & show options page
+add buttons: fill, add, setting in extension popup
+sort rules
+bulk delete rules
+bulk edit rule
+add header to option page
