@@ -1,11 +1,59 @@
+,
+  "background": {
+    "scripts": ["background.js"]
+  }
+
+
+  	chrome.runtime.onMessage.addListener(
+		function(request, sender, sendResponse) {
+			switch (request.message) {
+				case 'add_setting_rules':
+					console.log(request.rules);
+					alert('option page openned');
+					break;
+			}
+		}
+	);
+
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		switch (request.message) {
+			case 'add_form_rules':
+				chrome.runtime.openOptionsPage(function () {
+					chrome.runtime.sendMessage({message: "add_setting_rules", rules: request.rules});					
+				})
+				break;
+		}
+	}
+);
+
 // content script: load setting from chrome storage
 // remove setting.js
-after saving setting in option page, update content script local setting
-change stringMatch: detect regex by regex:.*?
-filter rules
+// after saving setting in option page, update content script local setting
+// change stringMatch: detect regex by regex:.*?
+// filter rules
+// sort rules
+// create extension popup with 3 actions
+	// fill form
+	// add form rules
+	// manage rules
+// background script, on clicking "add form rules"
+// 	send message "query_form_fields" to active tab
+// content script, on message "query_form_fields"
+// 	create rules from page inputs
+// 	send message "add_form_rules" to background script
+// fix bug changing rule input cause row is removed
+background script, on message "add_form_rules"
+	open setting page
+	pass message.rules to setting page
+setting script, prepend rules to scope.rules
+fix bug toggle select all, to fix: only select visible (filtered) items
+
 alt+s: add form fields to rule & show options page
+	content script: on alt+a, 
+		send message open_setting_page to background script
+		send field list as message params
 add buttons: fill, add, setting in extension popup
-sort rules
 bulk delete rules
 bulk edit rule
 add header to option page

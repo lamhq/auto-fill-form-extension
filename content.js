@@ -16,8 +16,8 @@ var stringMatch = function (str, pattern) {
 	return str.match(regex) !== null;
 };
 
-var getSettingTemplate = function () {
-	var setting = { rules: [] };
+var getFormRules = function () {
+	var rules = [];
 
 	$(fillFormSetting.supportedControls).each(function () {
 		var rule = {
@@ -25,18 +25,19 @@ var getSettingTemplate = function () {
 			fieldRule: $(this).attr('name'),
 			value: getInputValue($(this))
 		}
-		var ruleExists = setting.rules.some(function (element, index, array) {
+		var ruleExists = rules.some(function (element, index, array) {
 			return element.siteRule==rule.siteRule && element.fieldRule==rule.fieldRule;
 		});
 		if (!ruleExists) {
-			setting.rules.push(rule);
+			rules.push(rule);
 		}
 	});	
-	setting.rules.sort(function (a, b) {
+	
+	rules.sort(function (a, b) {
 		var cr = a.siteRule.localeCompare(b.siteRule)
 		return cr!==0 ? cr : a.fieldRule.localeCompare(b.fieldRule);
 	});
-	return JSON.stringify(setting);
+	return rules;
 };
 
 var getInputValue = function ($input) {
@@ -93,20 +94,24 @@ var init = function() {
 
 		// alt+s
 		if (e.altKey && e.which==83) {
-			// var $textarea = $('<textarea></textarea>').val(getSettingTemplate());
+			// var $textarea = $('<textarea></textarea>').val(getFormRules());
 			// $textarea.prependTo($('body'));
 		}
 	});
 
 	chrome.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {
-			if( request.message === "fill_form" ) {
-				fillForm();
-				return;
-			}
-			if( request.message === "refresh_setting" ) {
-				loadSetting();
-				return;
+			switch (request.message) {
+				case 'fill_form':
+					fillForm();
+					break;
+				case 'refresh_setting':
+					loadSetting();
+					break;
+				case 'query_form_fields':
+					var rules = getFormRules();
+					chrome.runtime.sendMessage({message: "add_form_rules", rules: rules});					
+					break;
 			}
 		}
 	);

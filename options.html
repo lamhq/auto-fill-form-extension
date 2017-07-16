@@ -56,13 +56,13 @@
 						<input type="checkbox" ng-model="rule.selected"/>
 					</td>
 					<td>
-						<input type="text" ng-model="rule.siteRule" class="form-control" placeholder="Text or regex string (ex: regex:^a)" />
+						<input type="text" ng-model="rule.siteRule" ng-model-options="{updateOn: 'blur'}" class="form-control" placeholder="Text or regex string (ex: regex:^a)" />
 					</td>
 					<td>
-						<input type="text" ng-model="rule.fieldRule" class="form-control" placeholder="Text or regex string (ex: regex:^a)" />
+						<input type="text" ng-model="rule.fieldRule" ng-model-options="{updateOn: 'blur'}" class="form-control" placeholder="Text or regex string (ex: regex:^a)" />
 					</td>
 					<td>
-						<input type="text" ng-model="rule.value" class="form-control" />
+						<input type="text" ng-model="rule.value" ng-model-options="{updateOn: 'blur'}" class="form-control" />
 					</td>
 					<td>
 						<button type="button" ng-click="deleteRule(rule)" class="btn btn-danger" title="Remove"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
@@ -75,6 +75,6 @@
 	<script src="lib/jquery.min.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="lib/angular.min.js"></script>
-	<script src="app.js"></script>
+	<script src="options.js"></script>
 </body>
 </html>
