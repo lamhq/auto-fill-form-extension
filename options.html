@@ -5,6 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
+	<style>
+	.clickable { cursor: pointer }
+	</style>
 </head>
 <body ng-controller="DefaultController">
 <div class="container-fluid">
@@ -34,29 +37,29 @@
 			<thead>
 				<tr>
 					<th><input type="checkbox" ng-click="toggleSelect($event)" /></th>
-					<th><a href="#" title="Click to sort">Site Rule</a></th>
-					<th><a href="#" title="Click to sort">Field Rule</a></th>
-					<th><a href="#" title="Click to sort">Value</a></th>
+					<th><span ng-click="doSort('siteRule')" title="Click to sort" class="clickable">Site Rule</span></th>
+					<th><span ng-click="doSort('fieldRule')" title="Click to sort" class="clickable">Field Rule</span></th>
+					<th><span ng-click="doSort('value')" title="Click to sort" class="clickable">Value</span></th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td></td>
-					<td><input type="text" class="form-control" placeholder="Enter text to filter..." /></td>
-					<td><input type="text" class="form-control" placeholder="Enter text to filter..." /></td>
-					<td><input type="text" class="form-control" placeholder="Enter text to filter..." /></td>
+					<td><input type="text" ng-model="siteFilter" class="form-control" placeholder="Enter text to filter..." /></td>
+					<td><input type="text" ng-model="fieldFilter" class="form-control" placeholder="Enter text to filter..." /></td>
+					<td><input type="text" ng-model="valueFilter" class="form-control" placeholder="Enter text to filter..." /></td>
 					<td></td>
 				</tr>
-				<tr ng-repeat="rule in rules track by $index">
+				<tr ng-repeat="rule in rules | filter:{ siteRule: siteFilter, fieldRule: fieldFilter, value: valueFilter } | orderBy:sortAttr:reverseSort">
 					<td>
 						<input type="checkbox" ng-model="rule.selected"/>
 					</td>
 					<td>
-						<input type="text" ng-model="rule.siteRule" class="form-control" />
+						<input type="text" ng-model="rule.siteRule" class="form-control" placeholder="Text or regex string (ex: regex:^a)" />
 					</td>
 					<td>
-						<input type="text" ng-model="rule.fieldRule" class="form-control" />
+						<input type="text" ng-model="rule.fieldRule" class="form-control" placeholder="Text or regex string (ex: regex:^a)" />
 					</td>
 					<td>
 						<input type="text" ng-model="rule.value" class="form-control" />

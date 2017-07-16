@@ -11,7 +11,6 @@ angular.module('myApp',[])
 		};
 	};
 
-
 	$scope.addRule = function () {
 		$scope.rules.push(createRule());
 	};
@@ -52,5 +51,12 @@ angular.module('myApp',[])
 		});
 	};
 
+	$scope.doSort = function (attribute) {
+		$scope.sortAttr = attribute;
+		$scope.reverseSort = !$scope.reverseSort;
+	};
+
 	$scope.loadSetting();
+	$scope.reverseSort = false;
+	$scope.sortAttr = '';
 });

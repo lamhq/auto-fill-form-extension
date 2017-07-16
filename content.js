@@ -9,7 +9,7 @@ var stringMatch = function (str, pattern) {
 	var regex = new RegExp(escapeRegExp(pattern), 'i');
 
 	// if rule is regex string, remove slash character
-	var matches = pattern.match(/^\/(.*?)\/$/i);
+	var matches = pattern.match(/^regex:(.*?)$/i);
 	if ( matches !== null ) {
 		regex = new RegExp(matches[1], 'i');
 	}
@@ -93,8 +93,8 @@ var init = function() {
 
 		// alt+s
 		if (e.altKey && e.which==83) {
-			var $textarea = $('<textarea></textarea>').val(getSettingTemplate());
-			$textarea.prependTo($('body'));
+			// var $textarea = $('<textarea></textarea>').val(getSettingTemplate());
+			// $textarea.prependTo($('body'));
 		}
 	});
 
