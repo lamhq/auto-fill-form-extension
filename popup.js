@@ -10,14 +10,7 @@ angular.module('myApp',[])
 		});
 	};
 
-	$scope.addForm = function() {
-		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			var activeTab = tabs[0];
-			chrome.tabs.sendMessage(activeTab.id, {"message": "query_form_fields"});
-		});
-	};
-
 	$scope.manage = function() {
-		chrome.runtime.openOptionsPage()
+		chrome.runtime.openOptionsPage();
 	};
 });

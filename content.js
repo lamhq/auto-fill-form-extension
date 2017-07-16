@@ -85,6 +85,11 @@ var loadSetting = function() {
 	});
 };
 
+var saveSetting = function () {
+	var data = JSON.stringify(window.fillFormSetting);
+	chrome.storage.sync.set({'setting': data });
+};
+
 var init = function() {
 	$(document).on('keyup', function (e) {
 		// alt+a
@@ -94,8 +99,11 @@ var init = function() {
 
 		// alt+s
 		if (e.altKey && e.which==83) {
-			// var $textarea = $('<textarea></textarea>').val(getFormRules());
-			// $textarea.prependTo($('body'));
+			getFormRules().forEach(function (rule) {
+				window.fillFormSetting.rules.unshift(rule);
+				saveSetting();
+				console.log('form rules added.');
+			});
 		}
 	});
 
@@ -107,10 +115,6 @@ var init = function() {
 					break;
 				case 'refresh_setting':
 					loadSetting();
-					break;
-				case 'query_form_fields':
-					var rules = getFormRules();
-					chrome.runtime.sendMessage({message: "add_form_rules", rules: rules});					
 					break;
 			}
 		}
