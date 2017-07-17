@@ -30,6 +30,9 @@ angular.module('myApp',[])
 	};
 
 	$scope.saveSetting = function () {
+		$scope.rules.forEach(function (rule) {
+			delete rule['$$hashKey'];
+		});
 		var data = JSON.stringify($scope.setting);
 		chrome.storage.sync.set({'setting': data }, function() {
 			// Send a message to the active tab
