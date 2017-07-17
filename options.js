@@ -12,7 +12,7 @@ angular.module('myApp',[])
 	};
 
 	$scope.addRule = function () {
-		$scope.rules.push(createRule());
+		$scope.rules.unshift(createRule());
 	};
 
 	$scope.deleteRule = function (rule) {
