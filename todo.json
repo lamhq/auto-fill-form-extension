@@ -1,49 +1,7 @@
-remove popup
-fill form when click extension icon
-add form rules when pressing alt+s
-show success alert when click save setting
-
-#### 
+fix bug item is hidden after change input value
+	cause: item does not match filters
+	to fix: add button filter, only do filter when click this button
 bulk delete rules
 bulk edit rule
-fix bug toggle select all, to fix: only select visible (filtered) items
-option page: add header
-remove popup page
-add buttons: fill, add, setting in extension popup
-
-
-,
-  "background": {
-    "scripts": ["background.js"]
-  }
-
-	$scope.addForm = function() {
-		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			var activeTab = tabs[0];
-			chrome.tabs.sendMessage(activeTab.id, {"message": "query_form_fields"});
-		});
-	};
-
-
-  	chrome.runtime.onMessage.addListener(
-		function(request, sender, sendResponse) {
-			switch (request.message) {
-				case 'add_setting_rules':
-					console.log(request.rules);
-					alert('option page openned');
-					break;
-			}
-		}
-	);
-
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		switch (request.message) {
-			case 'add_form_rules':
-				chrome.runtime.openOptionsPage(function () {
-					chrome.runtime.sendMessage({message: "add_setting_rules", rules: request.rules});					
-				})
-				break;
-		}
-	}
-);
+select all / deselect all checkbox: only select filtered items
+add context menu: fill form, add form field
