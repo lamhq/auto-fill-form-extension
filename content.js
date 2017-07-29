@@ -76,7 +76,6 @@ var fillForm = function() {
 			}
 		});
 	});	
-	console.log('form filled.');
 };
 
 var loadSetting = function() {
@@ -92,18 +91,22 @@ var saveSetting = function () {
 
 var init = function() {
 	$(document).on('keyup', function (e) {
-		// alt+a
+		// alt+a: auto fill form inputs
 		if (e.altKey && e.which==65) {
 			fillForm();
 		}
 
-		// alt+s
+		// alt+s: add all input's values in current tab to setting
 		if (e.altKey && e.which==83) {
-			getFormRules().forEach(function (rule) {
+			var currentFormRules = getFormRules();
+			currentFormRules.forEach(function (rule) {
 				window.fillFormSetting.rules.unshift(rule);
-				saveSetting();
-				console.log('form rules added.');
 			});
+
+			if (currentFormRules.length>0) {
+				saveSetting();
+				chrome.runtime.sendMessage({message: "open_option_page"});
+			}
 		}
 	});
 

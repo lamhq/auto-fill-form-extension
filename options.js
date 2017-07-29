@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp',[])
-.controller('DefaultController', function($scope) {
+.controller('DefaultController', function($scope, $timeout) {
 	var createRule = function () {
 		return {
 			"siteRule":"",
@@ -41,7 +41,7 @@ angular.module('myApp',[])
 					chrome.tabs.sendMessage(tab.id, {"message": "refresh_setting"});
 				});
 			});
-			console.log('setting saved');
+			$scope.showAlert('Setting saved.');
 		});
 	};
 
@@ -57,6 +57,14 @@ angular.module('myApp',[])
 	$scope.doSort = function (attribute) {
 		$scope.sortAttr = attribute;
 		$scope.reverseSort = !$scope.reverseSort;
+	};
+
+	$scope.showAlert = function (message) {
+		$scope.alert = message;
+		$timeout(function () {
+	        $scope.alert = '';
+	    },3000);
+		$scope.$apply();
 	};
 
 	$scope.loadSetting();
